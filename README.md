@@ -30,3 +30,8 @@
   1. Spring Application Context에 관련 Bean들을 구성하여 Spring MVC 활성화
   2. 내장된 톰캣 서버를 Spring Application Context에 구성
   3. Thymeleaf 템플릿을 사용하는 뷰를 그리기 위해 Thymeleaf View Resolver 구성
+
+### 5. Java; Stream
+  1. 스트림을 이용하면 배열이나 컬렉션에 함수 여러개를 조합해 원하는 결과를 필터링하여 가공된 결과를 얻을 수 있음
+  2. 구조 : 객체.스트림생성().가공().결과만들기();
+  -> 파이프라인 방식
