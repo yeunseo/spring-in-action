@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,12 @@ import tacos.Taco;
 @Controller
 @RequestMapping("/design")
 public class DesignTacoController {
+	
+	@PostMapping
+	public String processDesign(Taco design) {
+		// 재료 선택내역 저장 - design 폼 제출
+		return "redirect:/orders/current";
+	}
 	
 	@GetMapping
 	public String showDesignForm(Model model) {
