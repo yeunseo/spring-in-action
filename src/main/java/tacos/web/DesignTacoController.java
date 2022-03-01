@@ -4,8 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +24,15 @@ import tacos.Taco;
 public class DesignTacoController {
 	
 	@PostMapping
-	public String processDesign(Taco design) {
+	public String processDesign(@Valid Taco design, Errors errors) {
+		
+		// 폼 유효성 검증
+		if(errors.hasErrors()) {
+			return "design";
+		}
+		
 		// 재료 선택내역 저장 - design 폼 제출
+		log.info("Processing design: " + design);
 		return "redirect:/orders/current";
 	}
 	
