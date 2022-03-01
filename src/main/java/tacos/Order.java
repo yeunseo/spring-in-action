@@ -1,5 +1,7 @@
 package tacos;
 
+import java.sql.Date;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -11,6 +13,9 @@ import lombok.Data;
 // 주문된 타코의 정보를 가지는 클래스
 @Data
 public class Order {
+	
+	private Long id;
+	private Date placedAt;
 	
 	@NotBlank(message="Name is required")
 	private String deliveryName;

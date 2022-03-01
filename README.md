@@ -16,6 +16,9 @@
     >3. 코드의 가독성 향상, 유지보수성 향상시켜줌
 * Thymeleaf
 * Spring Web
+* Spring Validation
+* JdbcTemplate
+* H2 Database
 
 ### 2. Maven/Gradle 프로젝트 구조
 * src/main/java
@@ -52,3 +55,12 @@
 * application.properties 파일에 `spring.thymeleaf.cache=false` 추가
 * 배포 시 해당 옵션 삭제 또는 true로 변경해야 한다
 * 물론 스프링 devtool을 사용하면 이 설정이 필요 없다(자동으로 해준다)
+
+### 9. RowMapper
+* jdbc.query()메서드는 SQL 실행 결과(ResultSet)를 자바 객체로 변환한 결과인 RowMapper로 반환한다
+* 원하는 형태의 결과값 반환 가능
+* SELECT로 나온 여러개의 값을 며 사용자가 원하는 형태로 반환 할 수 있다
+
+### 10. schema.sql과 data.sql
+* src/main/resources에 위치
+* 스프링부트는 애플리케이션이 시작될 때 사용중인 DB에서 이 두 파일을 자동으로 실행한다.
