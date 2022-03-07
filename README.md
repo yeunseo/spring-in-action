@@ -64,3 +64,13 @@
 ### 10. schema.sql과 data.sql
 * src/main/resources에 위치
 * 스프링부트는 애플리케이션이 시작될 때 사용중인 DB에서 이 두 파일을 자동으로 실행한다.
+
+### 11. PreparedStatementCreator(), KeyHolder()를 이용한 쿼리 실행
+* update()는 변경된 행의 개수만 리턴하므로 SQL의 INSERT작업 후 삽입된 자동생성되는 데이터의 키(ID) 값을 알 수 없다. 이 키값을 알려면 KeyHolder를 사용해야 한다.
+* `PreparedStatementCreatorFactory()`를 이용해 실행할 쿼리와 쿼리에 필요한 **매개변수의 타입**을 전달하고
+* `newPreparedStatementCreator()`를 호출하여 매개변수 값을 전달한다.
+* `GeneratedKeyHolder()`를 통해 KeyHolder객체를 생성하고 앞서 만든 psc와 keyholder를 인자로 `update()`를 호출한다.
+
+12. @SessionAttributes()
+* @ModelAttribute 또는 model.addAttribute()를 사용하여 객체를 저장할 때 @SessionAttribute 괄호 안의 값이 같으면 model에 추가될 때 **세션에 저장되도록 지정**하는 것
+* 컨트롤러 내에서만 동작하며 컨트롤러 안에서 다루는 특정 모델 객체를 세션에 넣고 공유할 때 사용한다.

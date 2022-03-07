@@ -1,6 +1,8 @@
 package tacos;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -42,4 +44,11 @@ public class Order {
 	// 세 자리 숫자인지 검증
 	@Digits(integer=3, fraction=0, message="Invalid CVV")
 	private String ccCVV;
+	
+	// 입력받은 design(세션에 존재)을 order repository에 저장하기 위한 메서드
+	private List<Taco> tacos = new ArrayList<>();
+	
+	public void addDesign(Taco design) {
+		this.tacos.add(design);
+	}
 }

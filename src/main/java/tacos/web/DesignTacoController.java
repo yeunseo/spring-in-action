@@ -11,38 +11,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 import tacos.Ingredient;
 import tacos.Ingredient.Type;
+import tacos.Order;
 import tacos.Taco;
 import tacos.data.IngredientRepository;
+import tacos.data.TacoRepository;
 
 @Slf4j		// logger
 @Controller
 @RequestMapping("/design")
+@SessionAttributes("order")		//모델을 세션에 저장해 디자인->주문으로 모델이 이어지게 해주는 역할  
 public class DesignTacoController {
 	
 	private final IngredientRepository ingredientRepo;
+	private final TacoRepository tacoRepo;
 	
 	@Autowired
-	public DesignTacoController(IngredientRepository ingredientRepo) {
+	public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository tacoRepo) {
 		this.ingredientRepo = ingredientRepo;
-	}
-	
-	@PostMapping
-	public String processDesign(@Valid Taco design, Errors errors) {
-		
-		// 폼 유효성 검증
-		if(errors.hasErrors()) {
-			return "design";
-		}
-		
-		// 재료 선택내역 저장 - design 폼 제출
-		log.info("Processing design: " + design);
-		return "redirect:/orders/current";
+		this.tacoRepo = tacoRepo;
 	}
 	
 	@GetMapping
@@ -69,4 +63,34 @@ public class DesignTacoController {
 						  .filter(x -> x.getType().equals(type))
 						  .collect(Collectors.toList());
 	}
+	
+	// 모델에 Order 객체 생성
+	@ModelAttribute(name = "order")
+	public Order order() {
+		return new Order();
+	}
+	
+	// 모델에 Taco 객체 생성
+	@ModelAttribute(name = "taco")
+	public Taco taco() {
+		return new Taco();
+	}
+	
+	@PostMapping
+	public String processDesign(@Valid Taco design, Errors errors, @ModelAttribute Order order) {
+		
+		// 폼 유효성 검증
+		if(errors.hasErrors()) {
+			return "design";
+		}
+		
+		// 재료 선택내역 저장 - design 폼 제출
+		Taco saved = tacoRepo.save(design);
+		//order.addDesign(saved);
+
+		
+		return "redirect:/orders/current";
+	}
+		
+	
 }
